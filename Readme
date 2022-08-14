@@ -86,7 +86,7 @@ Sample Request & Responses per API.
         ]
 
      3. Retrieve a payment using transaction reference
-        ~ Endpoint (LocalHost) http://localhost:8282/solva-power-company/api/v1/utilityInfo/{5c5571aa-6658-4c76-b034-914e719f9288}
+        ~ Endpoint (LocalHost) http://localhost:8282/solva-power-company/api/v1/utilityInfo/5c5571aa-6658-4c76-b034-914e719f9288
         ~ Method: GET
 
             ~ Response
@@ -166,7 +166,7 @@ Sample Request & Responses per API.
             ]
 
      6. Retrieve a single reversal by the use of transaction reference.
-        ~ Endpoint (Localhost) http://localhost:8282/solva-power-company/api/v1/reversal/{5c5571aa-6658-4c76-b034-914e719f9288}
+        ~ Endpoint (Localhost) http://localhost:8282/solva-power-company/api/v1/reversal/5c5571aa-6658-4c76-b034-914e719f9288
         ~ Method: GET
 
             ~ Response
