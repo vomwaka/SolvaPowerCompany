@@ -13,6 +13,8 @@ The Application has a total of 6 APIs Namely:
 
 Swagger UI is also implemented instead of API documentation.
 
+SolvaPowerCompany Database migration is also included.
+
 Sample Request & Responses per API.
 
     1. Making A utility Payment
@@ -50,38 +52,38 @@ Sample Request & Responses per API.
 
             ~ Response
 
-            [
-                {
-                    "id": 1,
-                    "billerCode": "777777",
-                    "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
-                    "transactionAmount": "200.00",
-                    "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
-                    "currency": "KES",
-                    "transactionDate": "2022-08-14T16:20:40.000+00:00",
-                    "customerName": "John Doe",
-                    "billBalance": "1000.00",
-                    "narration": "Utility Bill Payment",
-                    "creditAccount": "1145756190",
-                    "customerMobileNumber": "0726630811",
-                    "status": null
-                },
-                {
-                    "id": 2,
-                    "billerCode": "777777",
-                    "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
-                    "transactionAmount": "200.00",
-                    "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
-                    "currency": "KES",
-                    "transactionDate": "2022-08-14T16:39:11.000+00:00",
-                    "customerName": "John Doe",
-                    "billBalance": "1000.00",
-                    "narration": "Utility Bill Payment",
-                    "creditAccount": "1145756190",
-                    "customerMobileNumber": "0726630811",
-                    "status": null
-                }
-            ]
+        [
+            {
+                "id": 1,
+                "billerCode": "777777",
+                "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                "transactionAmount": "200.00",
+                "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                "currency": "KES",
+                "transactionDate": "2022-08-14T16:20:40.000+00:00",
+                "customerName": "John Doe",
+                "billBalance": "1000.00",
+                "narration": "Utility Bill Payment",
+                "creditAccount": "1145756190",
+                "customerMobileNumber": "0726630811",
+                "status": null
+            },
+            {
+                "id": 2,
+                "billerCode": "777777",
+                "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                "transactionAmount": "200.00",
+                "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                "currency": "KES",
+                "transactionDate": "2022-08-14T16:39:11.000+00:00",
+                "customerName": "John Doe",
+                "billBalance": "1000.00",
+                "narration": "Utility Bill Payment",
+                "creditAccount": "1145756190",
+                "customerMobileNumber": "0726630811",
+                "status": null
+            }
+        ]
 
      3. Retrieve a payment using transaction reference
         ~ Endpoint (LocalHost) http://localhost:8282/solva-power-company/api/v1/utilityInfo/{5c5571aa-6658-4c76-b034-914e719f9288}
@@ -89,20 +91,101 @@ Sample Request & Responses per API.
 
             ~ Response
 
-                         [
-                            {
-                                "id": 1,
-                                "billerCode": "777777",
-                                "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
-                                "transactionAmount": "200.00",
-                                "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
-                                "currency": "KES",
-                                "transactionDate": "2022-08-14T16:20:40.000+00:00",
-                                "customerName": "John Doe",
-                                "billBalance": "1000.00",
-                                "narration": "Utility Bill Payment",
-                                "creditAccount": "1145756190",
-                                "customerMobileNumber": "0726630811",
-                                "status": null
-                            }
-                          ]
+         [
+            {
+                "id": 1,
+                "billerCode": "777777",
+                "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                "transactionAmount": "200.00",
+                "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                "currency": "KES",
+                "transactionDate": "2022-08-14T16:20:40.000+00:00",
+                "customerName": "John Doe",
+                "billBalance": "1000.00",
+                "narration": "Utility Bill Payment",
+                "creditAccount": "1145756190",
+                "customerMobileNumber": "0726630811",
+                "status": null
+            }
+         ]
+
+     4. Initiate a reversal
+        ~ Endpoint (Localhost) http://localhost:8282/solva-power-company/api/v1/reversal
+        ~ Method: POST
+
+            ~ Request
+
+            {
+                "billerCode": "777777",
+                "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                "transactionAmount": "200.00",
+                "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                "currency": "KES",
+                "transactionDate": "{{$isoTimestamp}}",
+                "customerName": "John Doe",
+                "billBalance": "1000.00",
+                "narration": "Utility Bill Payment",
+                "creditAccount": "1145756190",
+                "customerMobileNumber": "0726630811",
+                "reversalReason": "Over Payment"
+            }
+
+            ~ Response
+
+            {
+                "statusCode": "202",
+                "statusDesc": "Utility Payment Reversal initiated Successfully!",
+                "customerRef": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                "transRef": "5c5571aa-6658-4c76-b034-914e719f9288",
+                "id": 3
+            }
+
+     5. Retrieve all reversals
+        ~ Endpoint (Localhost)  http://localhost:8282/solva-power-company/api/v1/reversals
+        ~ Method: GET
+
+            ~ Response
+
+            [
+                {
+                    "id": 3,
+                    "billerCode": "777777",
+                    "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                    "transactionAmount": "200.00",
+                    "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                    "currency": "KES",
+                    "transactionDate": "2022-08-14T16:40:50.000+00:00",
+                    "customerName": "John Doe",
+                    "billBalance": "1000.00",
+                    "narration": "Utility Bill Payment",
+                    "creditAccount": "1145756190",
+                    "customerMobileNumber": "0726630811",
+                    "status": null,
+                    "reversalReason": "Over Payment"
+                }
+            ]
+
+     6. Retrieve a single reversal by the use of transaction reference.
+        ~ Endpoint (Localhost) http://localhost:8282/solva-power-company/api/v1/reversal/{5c5571aa-6658-4c76-b034-914e719f9288}
+        ~ Method: GET
+
+            ~ Response
+
+            [
+                {
+                    "id": 3,
+                    "billerCode": "777777",
+                    "customerReference": "59755c85-c4ba-4f46-9a29-32a6f7ca6816",
+                    "transactionAmount": "200.00",
+                    "transactionReference": "5c5571aa-6658-4c76-b034-914e719f9288",
+                    "currency": "KES",
+                    "transactionDate": "2022-08-14T16:40:50.000+00:00",
+                    "customerName": "John Doe",
+                    "billBalance": "1000.00",
+                    "narration": "Utility Bill Payment",
+                    "creditAccount": "1145756190",
+                    "customerMobileNumber": "0726630811",
+                    "status": null,
+                    "reversalReason": "Over Payment"
+                }
+            ]
